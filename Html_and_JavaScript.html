@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<title>Geo coder example</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+<script type="text/javascript">
+		var results;
+		
+		function initialize()
+		{
+			var chicago = new google.maps.LatLng(41.875696,-87.624207);
+			var mapOptions = {
+			  zoom: 11,
+			  center: chicago,
+			  mapTypeId: google.maps.MapTypeId.ROADMAP,
+			  mapTypeControlOptions: {
+				mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID, google.maps.MapTypeId.TERRAIN],
+				style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+				}
+			}
+			
+			map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+		}
+
+		function geoSearch()
+		{
+		  var searchQuery = document.getElementById('txt_search');
+		  var fullUrl = "http://geocoder.socialexplorer.com/suggest?limit=5&format=xml&details=0&bounded=0&viewbox=40.944704,40.941397,-73.843510,-73.84024&point=1&geometry=0&query=" + searchQuery.value;
+		  queryService(fullUrl)
+		}
+		
+		function queryService(srvUrl){
+			var xmlhttp = new XMLHttpRequest();
+
+			xmlhttp.onreadystatechange=function()
+			{
+				if (xmlhttp.readyState==4)
+				{
+					alert(xmlhttp.getAllResponseHeaders());
+					document.getElementById("txt_result").innerHTML=xmlhttp.responseText + "jel ovo ravno>";
+				}
+			}
+			
+			xmlhttp.open('get', 'test.html', false);
+			xmlhttp.send();
+			
+			alert(srvUrl);
+		}
+		
+</script>
+</head>
+
+<body onload="initialize()">
+    <div id="map_canvas" style="width:1200px; height:800px; float:left"></div>
+	<input type="text" id="txt_search" style="float:left" onkeypress="geoSearch();"/>
+    <button type="button" id="btn_search" style="float:left">Search</button>
+    <input type="text" id="txt_result" align="left" height="400" width="500"/>
+</body>
+</html>
