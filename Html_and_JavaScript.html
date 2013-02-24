@@ -3,9 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map_canvas { height: 100% }
+      html { height: 100%;	 }
+      body { height: 100%; margin: 0; padding: 0; }
+      #map_canvas { height: 200px; }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <title>Geo coder example</title>
@@ -32,7 +32,7 @@
 		function geoSearch()
 		{
 		  var searchQuery = document.getElementById('txt_search');
-		  var fullUrl = "http://geocoder.socialexplorer.com/suggest?limit=5&format=xml&details=0&bounded=0&viewbox=40.944704,40.941397,-73.843510,-73.84024&point=1&geometry=0&query=" + searchQuery.value;
+		  var fullUrl = "geocoderproxy.php?query=" + searchQuery.value;
 		  queryService(fullUrl)
 		}
 		
@@ -43,24 +43,23 @@
 			{
 				if (xmlhttp.readyState==4)
 				{
-					alert(xmlhttp.getAllResponseHeaders());
-					document.getElementById("txt_result").innerHTML=xmlhttp.responseText + "jel ovo ravno>";
+					document.getElementById("txt_result").innerHTML=xmlhttp.responseText;
 				}
 			}
 			
-			xmlhttp.open('get', 'test.html', false);
-			xmlhttp.send();
-			
-			alert(srvUrl);
+			xmlhttp.open('get', srvUrl, false);
+			xmlhttp.send();	
 		}
 		
 </script>
 </head>
 
 <body onload="initialize()">
-    <div id="map_canvas" style="width:1200px; height:800px; float:left"></div>
-	<input type="text" id="txt_search" style="float:left" onkeypress="geoSearch();"/>
-    <button type="button" id="btn_search" style="float:left">Search</button>
-    <input type="text" id="txt_result" align="left" height="400" width="500"/>
+    <div id="map_canvas" style="width:800px; height:400px;"></div>
+	<br/>
+	<input type="text" id="txt_search"/>
+    <button type="button" id="btn_search" onclick="geoSearch();">Search</button>
+    <br/><br/>
+    <div id="txt_result" style="width: 800px; border: 1px solid black;">Type your query in the textbox...</div>
 </body>
 </html>
